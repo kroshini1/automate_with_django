@@ -4,6 +4,7 @@ from uploads.models import Upload
 from django.conf import settings
 from django.core.management import call_command
 from django.contrib import messages
+from .tasks import import_data_task
 
 # Create your views here.
 def import_data(request):
@@ -18,11 +19,9 @@ def import_data(request):
         base_url = str(settings.BASE_DIR)
         file_path = base_url+relative_path
         print(file_path)
-        try:
-          call_command('importdata',file_path,model_name)
-          messages.success(request,'Data imported successfully')        
-        except Exception as e:
-           messages.error(request,str(e))
+        #handle the import data task
+        import_data_task.delay(file_path,model_name)
+        messages.success(request,'Your data is being imported, you will be notified once it is done.')
         return redirect('import_data')
      
 
