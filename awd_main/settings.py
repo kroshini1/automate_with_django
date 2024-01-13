@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -118,6 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR/'static'
+STATICFILES_DIRS =[
+    'awd_main/static',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -136,3 +141,12 @@ MESSAGE_TAGS = {
 }
 
 CELERY_BROKER_URL = 'redis://localhost:6379'
+
+#EMAIL CONFIGURATION
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'foodonline534@gmail.com'
+EMAIL_HOST_PASSWORD = 'nmhq qmpe lvdq qipx'
+EMAIL_USE_TLS=True
+DEFAULT_FROM_EMAIL='Importing CSV files<foodonline534@gmail.com>'
+DEFAULT_TO_EMAIL='adarikirankumar9@gmail.com'

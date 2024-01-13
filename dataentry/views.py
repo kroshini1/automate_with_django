@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from. utils import get_all_custom_models
+from. utils import get_all_custom_models, check_csv_errors
 from uploads.models import Upload
 from django.conf import settings
 from django.core.management import call_command
@@ -18,7 +18,13 @@ def import_data(request):
         relative_path = str(upload.file.url) 
         base_url = str(settings.BASE_DIR)
         file_path = base_url+relative_path
-        print(file_path)
+        # check for the csv errors
+        try:
+            check_csv_errors(file_path,model_name)
+        except Exception as e:
+            messages.error(request,str(e))
+            return redirect('import_data')
+        
         #handle the import data task
         import_data_task.delay(file_path,model_name)
         messages.success(request,'Your data is being imported, you will be notified once it is done.')
