@@ -1,23 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Hello, world!</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="" />
-  <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="{% static 'js/custom.js'%}"></script>
-</head>
-<body>
-    <div class="container">
+{% extends 'base.html'%}
+{% block content %}
+    <div class="container mt-5 alert-success shadow" style="max-width: 600px;padding: 50px; border-radius: 10px;">
        <h3 class="text-center"> Export Data From database tables </h3>
        <form action="{% url 'export_data' %}" method ="POST" enctype="multipart/form-data" style="max_width:200px;margin:auto;padding-top:50px">
          {% csrf_token %} 
@@ -31,10 +14,10 @@
                 {% endfor %}
             </select>
          </div>
-         <input type="submit" value="Export data" class= "btn btn-primary">       
-         
+         <div class="form-group">
+           <input type="submit" value="Export data" class= "btn btn-success">       
+         </div>
          {% include 'dataentry/alerts.html' %}
         </form>
     </div>    
-</body>
-</html>
+{% endblock %}
